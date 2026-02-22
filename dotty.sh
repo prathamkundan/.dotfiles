@@ -14,7 +14,7 @@ map_env() {
     [ -z "$1" ] && error "Missing argument" "Group cannot be blank"
     [ -z "$2" ] && error "Missing argument" "FROM cannot be blank"
     [ -z "$3" ] && error "Missing argument" "TO cannot be blank"
-    [ ! -e "$2" ] && error "No such file in config: $1"
+    [ ! -e "$2" ] && warn "No such file in config: $1"
     MAPPINGS+=("$1;$2;$3")
 }
 
@@ -61,7 +61,6 @@ rev_sync() {
 
             rel_path="${from#"./"}"
             dest="$SCRIPT_DIR/$rel_path"
-            [[ ! -e "$dest" ]] && { error "Invalid dest for reverse sync: '$src'"; continue; }
 
             info "Reverse syncing '$map_group': '$src' -> '$dest'"
             mirror "$src" "$dest" || warn "Could not reverse sync" "Failed for:'$map_group':'$from'->'$to'"
@@ -125,6 +124,7 @@ usage() {
 
     Options:
     -s          Sync (Project -> System)
+    -r          Reverse Sync (System -> Project)
     -b <dir>    Backup (System -> <dir>)
     -c <file>   Config file (default: ./config.sh)
     -h          Show this help
