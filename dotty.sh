@@ -35,6 +35,7 @@ mirror() {
     fi
 }
 
+info()  { printf "\033[1;36mInfo: %s\033[0m%s\n" "$1" "${2:+ - $2}"; }
 error() { printf "\033[1;31mError: %s\033[0m%s\n" "$1" "${2:+ - $2}" >&2; exit 1; }
 warn() { printf "\033[1;33mWarning: %s\033[0m%s\n" "$1" "${2:+ - $2}" >&2; }
 
@@ -44,6 +45,28 @@ expand_path() {
         '~/'*) printf '%s/%s\n' "$HOME" "${1#"~/"}" ;;
         *) printf '%s\n' "$1" ;;
     esac
+}
+
+rev_sync() {
+    [[ "$#" -eq 0 ]] && error "Missing argument" "Groups are missing"
+
+    for pattern in "$@"; do
+        for entry in "${MAPPINGS[@]}"; do
+            IFS=";" read -r map_group from to <<< "$entry"
+
+            [[ ! $map_group == $pattern ]] && continue
+
+            src="$(expand_path "$to")"
+            [[ ! -e "$src" ]] && { error "Invalid source for reverse sync: '$src'"; continue; }
+
+            rel_path="${from#"./"}"
+            dest="$SCRIPT_DIR/$rel_path"
+            [[ ! -e "$dest" ]] && { error "Invalid dest for reverse sync: '$src'"; continue; }
+
+            info "Reverse syncing '$map_group': '$src' -> '$dest'"
+            mirror "$src" "$dest" || warn "Could not reverse sync" "Failed for:'$map_group':'$from'->'$to'"
+        done
+    done
 }
 
 sync() {
@@ -56,11 +79,12 @@ sync() {
             [[ ! $map_group == $pattern ]] && continue
 
             dest="$(expand_path "$to")"
-            [[ ! -e "$src" ]] && continue
 
             rel_path="${from#"./"}"
             src="$SCRIPT_DIR/$rel_path"
+            [[ ! -e "$src" ]] && { warn "Invalid source: '$src'"; continue; }
 
+            info "Syncing '$map_group': '$src' -> '$dest'"
             mirror "$src" "$dest" || warn "Could not sync" "Failed for:'$map_group':'$from'->'$to'"
         done
     done
@@ -89,6 +113,7 @@ backup() {
             rel_path="${from#"./"}"
             dest="$backup_dir/$rel_path"
 
+            info "Backing up '$map_group': '$src' -> '$dest'"
             mirror "$src" "$dest" || warn "Could not backup" "Failed for:'$map_group':'$from'->'$to'"
         done
     done
@@ -109,13 +134,15 @@ exit 0
 
 
 CONFIG_FILE="$SCRIPT_DIR/config.sh"
+DO_REV_SYNC=false
 DO_SYNC=false
 DO_BACKUP=false
 BACKUP_PATH=""
 
 # Parse options
-while getopts "sb:c:h" opt; do
+while getopts "rsb:c:h" opt; do
     case "$opt" in
+        r) DO_REV_SYNC=true ;;
         s) DO_SYNC=true ;;
         b) DO_BACKUP=true; BACKUP_PATH="$OPTARG" ;;
         c) CONFIG_FILE="$OPTARG" ;;
@@ -131,7 +158,7 @@ else
     error "Config file not found" "$CONFIG_FILE"
 fi
 
-if [ "$DO_SYNC" = false ] && [ "$DO_BACKUP" = false ]; then
+if [ "$DO_SYNC" = false ] && [ "$DO_BACKUP" = false ] && [ "$DO_REV_SYNC" = false ]; then
     usage
 fi
 
@@ -139,7 +166,14 @@ if [ "$DO_BACKUP" = true ]; then
     backup "$BACKUP_PATH" "$@"
 fi
 
-# 4. Execute Sync SECOND (if requested)
+if [ "$DO_REV_SYNC" = true ] && [ "$DO_SYNC" = true ]; then
+    error "Invalid options" "Cannot sync and reverse sync together"
+fi
+
+if [ "$DO_REV_SYNC" = true ]; then
+    rev_sync "$@"
+fi
+
 if [ "$DO_SYNC" = true ]; then
     sync "$@"
 fi
