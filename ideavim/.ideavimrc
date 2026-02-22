@@ -1,0 +1,174 @@
+" ---------------------------
+" IdeaVim Configuration
+" ---------------------------
+" Docs: https://jb.gg/h38q75
+" Examples: https://jb.gg/share-ideavimrc
+
+let mapleader = " "
+
+" ---------------------------
+" General Options
+" ---------------------------
+set scrolloff=5          " Keep context lines when scrolling
+set incsearch            " Incremental search
+set ideajoin             " Smarter join (like gJ in IDEA)
+
+" ---------------------------
+" Plugins
+" ---------------------------
+Plug 'machakann/vim-highlightedyank'
+Plug 'tpope/vim-commentary'
+Plug 'vim-surround'
+Plug 'preservim/nerdtree'
+
+" ---------------------------
+" Custom Commands
+" ---------------------------
+command! Gb action Annotate
+command! R <Action>(RunClass)
+
+" ---------------------------
+" Mappings
+" ---------------------------
+
+" Use Q for formatting (disable Ex mode)
+nnoremap Q gq
+
+" IDE Actions
+nnoremap <leader>ds <Action>(FileStructurePopup)
+nnoremap gi <Action>(GotoImplementation)
+nnoremap <C-p> <Action>(RecentFiles)
+nnoremap \b <Action>(ToggleLineBreakpoint)
+
+" Move lines in Visual mode
+vmap <A-k> :m '<-2<CR>gv=gv
+vmap <A-j> :m '>+1<CR>gv=gv
+
+" Yank & Paste (system clipboard)
+vnoremap <leader>y "+y
+vnoremap <leader>p "+p
+nnoremap <leader>p "+p
+nnoremap <leader>P "+P
+vnoremap p "_dP
+
+" Insert mode convenience
+inoremap kj <Esc>
+
+" ---------------------------
+" Window Management
+" ---------------------------
+" Navigate
+nnoremap <leader>wj <C-w>j
+nnoremap <leader>wl <C-w>l
+nnoremap <leader>wk <C-w>k
+nnoremap <leader>wh <C-w>h
+
+" Resize
+nnoremap <C-Down>  :resize -2<CR>
+nnoremap <C-Up>    :resize +2<CR>
+nnoremap <C-Left>  :vertical resize -2<CR>
+nnoremap <C-Right> :vertical resize +2<CR>
+
+" ---------------------------
+" Scrolling
+" ---------------------------
+nnoremap <C-j> 2j<C-e><C-e>
+nnoremap <C-k> 2k<C-y><C-y>
+
+" ---------------------------
+" Unimpaired-like mappings
+" ---------------------------
+nnoremap ]<leader> o<Esc>k
+nnoremap ]b :bnext<CR>
+nnoremap [b :bprevious<CR>
+nnoremap ]T :tablast<CR>
+nnoremap ]t :tabnext<CR>
+nnoremap [t :tabprevious<CR>
+nnoremap [T :tabfirst<CR>
+" ---------------------------
+" IdeaVim Configuration
+" ---------------------------
+" Docs: https://jb.gg/h38q75
+" Examples: https://jb.gg/share-ideavimrc
+
+let mapleader = " "
+
+" ---------------------------
+" General Options
+" ---------------------------
+set scrolloff=5          " Keep context lines when scrolling
+set incsearch            " Incremental search
+set ideajoin             " Smarter join (like gJ in IDEA)
+
+" ---------------------------
+" Plugins (Note: IdeaVim doesn't load them)
+" ---------------------------
+Plug 'machakann/vim-highlightedyank'
+Plug 'tpope/vim-commentary'
+Plug 'vim-surround'
+Plug 'preservim/nerdtree'
+
+" ---------------------------
+" Custom Commands
+" ---------------------------
+command! Gb action Annotate
+command! R <Action>(RunClass)
+
+" ---------------------------
+" Mappings
+" ---------------------------
+
+" Use Q for formatting (disable Ex mode)
+nnoremap Q gq
+
+" IDE Actions
+map <leader>ds <Action>(FileStructurePopup)
+map gi <Action>(GotoImplementation)
+map <C-p> <Action>(RecentFiles)
+map \b <Action>(ToggleLineBreakpoint)
+
+" Move lines in Visual mode
+vmap <A-k> :m '<-2<CR>gv=gv
+vmap <A-j> :m '>+1<CR>gv=gv
+
+" Yank & Paste (system clipboard)
+vnoremap <leader>y "+y
+vnoremap <leader>p "+p
+nnoremap <leader>p "+p
+nnoremap <leader>P "+P
+vnoremap p "_dP
+
+" Insert mode convenience
+inoremap kj <Esc>
+
+" ---------------------------
+" Window Management
+" ---------------------------
+" Navigate
+nnoremap <leader>wj <C-w>j
+nnoremap <leader>wl <C-w>l
+nnoremap <leader>wk <C-w>k
+nnoremap <leader>wh <C-w>h
+
+" Resize
+nnoremap <C-Down>  :resize -2<CR>
+nnoremap <C-Up>    :resize +2<CR>
+nnoremap <C-Left>  :vertical resize -2<CR>
+nnoremap <C-Right> :vertical resize +2<CR>
+
+" ---------------------------
+" Scrolling
+" ---------------------------
+nnoremap <C-j> 2j<C-e><C-e>
+nnoremap <C-k> 2k<C-y><C-y>
+
+" ---------------------------
+" Unimpaired-like mappings
+" ---------------------------
+nnoremap ]<leader> o<Esc>k
+nnoremap ]b :bnext<CR>
+nnoremap [b :bprevious<CR>
+nnoremap ]T :tablast<CR>
+nnoremap ]t :tabnext<CR>
+nnoremap [t :tabprevious<CR>
+nnoremap [T :tabfirst<CR>

@@ -1,0 +1,5 @@
+map_env "nvim" "./nvim/" "~/.config/nvim"
+map_env "tmux" "./tmux/.tmux.conf" "~/.tmux.conf"
+map_env "shell" "./shell/.bashrc" "~/.bashrc"
+map_env "shell" "./shell/.bash_profile" "~/.bash_profile"
+map_env "ideavim" "./ideavim/.ideavimrc" "~/.ideavimrc"
