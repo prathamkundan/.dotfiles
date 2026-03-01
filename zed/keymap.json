@@ -1,0 +1,56 @@
+// Zed keymap
+//
+// For information on binding keys, see the Zed
+// documentation: https://zed.dev/docs/key-bindings
+//
+// To see the default key bindings run `zed: open default keymap`
+// from the command palette.
+[
+  {
+    "context": "Workspace",
+    "bindings": {
+      // "shift shift": "file_finder::Toggle"
+    },
+  },
+  {
+    "context": "(Editor && (showing_code_actions || showing_completions))",
+    "bindings": {
+      "Ctrl-P": "editor::ContextMenuPrevious",
+    },
+  },
+  {
+    "context": "Editor && vim_mode == insert",
+    "bindings": {
+      "k j": "vim::NormalBefore",
+    },
+  },
+  {
+    "context": "Editor && vim_mode == normal",
+    "bindings": {
+      "ctrl-p": "file_finder::Toggle",
+    },
+  },
+  {
+    "context": "Editor && VimControl",
+    "bindings": {
+      "space y": "editor::Copy",
+      "space p": "editor::Paste",
+      "space d s": "outline::Toggle",
+      "ctrl-j": "vim::LineDown",
+      "ctrl-k": "vim::LineUp",
+      "ctrl-b": "project_panel::ToggleFocus",
+    },
+  },
+  {
+    "context": "(VimControl && !menu)",
+    "bindings": {
+      "g l": null
+    }
+  },
+  {
+    "context": "(VimControl && !menu)",
+    "bindings": {
+      "g shift-l": null
+    }
+  }
+]
