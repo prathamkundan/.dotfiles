@@ -40,7 +40,8 @@ alias ls='ls --color=auto'
 alias ll='ls -a'
 alias cls='clear'
 alias grep='grep --color=auto'
-alias dotty="$HOME/.dotfiles/dotty.sh" # Assuming dotty is in $HOME :3
+alias dotty="$HOME/.dotfiles/dotty.sh"
+alias gbn='git rev-parse --abbrev-ref HEAD'
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
@@ -52,3 +53,4 @@ export PATH="$HOME/llama.cpp/llama.cpp/build/bin:$PATH"
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
 export SDKMAN_DIR="$HOME/.sdkman"
 [[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
+. "$HOME/.cargo/env"
