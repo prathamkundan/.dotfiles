@@ -1,3 +1,7 @@
+#
+# ~/.bashrc
+#
+
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return
 # Modern colorful prompt with special characters for Git branch and Python venv
@@ -17,6 +21,7 @@ set_bash_prompt() {
   local host="\h"
   local dir="\w"
 
+  # Use a cool arrow icon for the prompt start
   local prompt_icon="${GREEN}➜${RESET}"
 
   # Git branch icon (requires a Powerline-patched font)
