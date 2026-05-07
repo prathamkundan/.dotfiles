@@ -1,0 +1,9 @@
+title=""
+
+initial-command=tmux
+
+background=#000000
+background-opacity=0.85
+background-blur=true
+
+font-family="JetBrainsMono Nerd Font Mono"
