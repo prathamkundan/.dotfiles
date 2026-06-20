@@ -1,19 +1,22 @@
-require 'nvim-treesitter'.setup {
+local nvim = vim
+require('nvim-treesitter').setup {
     -- A list of parser names, or "all" (the five listed parsers should always be installed)
-    ensure_installed = { "vimdoc" },
-
+    ensure_installed = { "vimdoc", "bash", "python" },
     -- Install parsers synchronously (only applied to `ensure_installed`)
     sync_install = false,
-
-    -- Automatically install missing parsers when entering buffer
-    -- Recommendation: set to false if you don't have `tree-sitter` CLI installed locally
-    auto_install = true,
-
     highlight = {
         enable = true,
     },
 }
 
-if vim.loop.os_uname().sysname:match("Windows") then
+nvim.api.nvim_create_autocmd('FileType', {
+  callback = function()
+    nvim.wo.foldmethod = 'expr'
+    nvim.wo.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
+    nvim.wo.foldlevel = 99
+  end,
+})
+
+if nvim.loop.os_uname().sysname:match("Windows") then
     require('nvim-treesitter.install').compilers = { "gcc", "clang" }
 end
