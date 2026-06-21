@@ -1,4 +1,5 @@
 map_env "nvim" "./nvim/" "~/.config/nvim"
+map_env "nvim" "./nvim/.vimrc" "~/.vimrc"
 map_env "tmux" "./tmux/.tmux.conf" "~/.tmux.conf"
 map_env "shell" "./shell/.bashrc" "~/.bashrc"
 map_env "shell" "./shell/.bash_profile" "~/.bash_profile"
